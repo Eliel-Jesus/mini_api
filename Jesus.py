@@ -199,3 +199,16 @@ def add_livre():
                 'total_livres': Livre.query.count(),
                 'Livres': [liv.format_livre() for liv in Livre.query.all()]
         })
+#ajouter une categorie
+@app.route('/categories', methods=['POST'])
+def add_cat():
+    body=request.get_json()
+    new_libelle_categorie=body.get('libelle_categorie')
+    cat=Categorie(libelle_categorie=new_libelle_categorie)
+    cat.insert()
+    return jsonify({
+        'success':True,
+        'total_Categorie': Categorie.query.count(),
+        'Categories':[c.format_cat() for c in Categorie.query.all()]
+
+    })
